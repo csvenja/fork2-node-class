@@ -4,6 +4,9 @@ module.exports = function Class(props, parent) {
 	new_class.prototype.__proto__ = parent.prototype;
 
 	for (var prop in props) {
+		if (prop === "initialize") {
+			continue;
+		};
 		new_class.prototype[prop] = props[prop];
 	}
 

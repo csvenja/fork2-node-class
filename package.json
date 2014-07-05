@@ -4,7 +4,7 @@
   "description": "A CoffeeScript's class system",
   "main": "index.js",
   "scripts": {
-    "verify": "mocha"
+    "test": "mocha"
   },
   "keywords": [
     "class-system"

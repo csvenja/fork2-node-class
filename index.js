@@ -20,15 +20,21 @@ function Class(props, parent) {
 		ctor.prototype[key] = props[key];
 	}
 
+	// extend
 	if (parent) {
 		ctor.prototype.__proto__ = parent.prototype;
+		// Object.setPrototypeOf(ctor, parent.prototype);
 	}
 	ctor.__super__ = parent || Object;
 	ctor.prototype.__super__ = parent || Object;
 
-	ctor.prototype.super = function () {
+	var currentClass = ctor;
+	ctor.prototype.super = function (methodName) {
 		var args = [].slice.call(arguments, 1);
-		return this.__super__.prototype[arguments[0]].apply(this, args);
+		currentClass = currentClass.__super__;
+		var result = currentClass.prototype[methodName].apply(this, args);
+		currentClass = ctor;
+		return result;
 	};
 
 	return ctor;

@@ -1,14 +1,34 @@
-module.exports = function Class(props, parent) {
-	var new_class = props.initialize || function () {};
-	parent = parent || Object;
-	new_class.prototype.__proto__ = parent.prototype;
+'use strict';
 
-	for (var prop in props) {
-		if (prop === "initialize") {
-			continue;
-		};
-		new_class.prototype[prop] = props[prop];
+var CTOR_NAME = 'initialize';
+
+var extend = function (argument) {
+	// body...
+}
+
+function Class(props, parent) {
+	var ctor = props[CTOR_NAME] || function () {};
+
+	// // strict not allow modify arguments
+	// // using arguments will cause 'Possible strict violation'
+	// function ctor() {
+	// 	if (props.hasOwnProperty(CTOR_NAME)) {
+	// 		props[CTOR_NAME].apply(this, arguments);
+	// 	}
+	// }
+
+	if (parent) {
+		ctor.prototype.__proto__ = parent.prototype;
 	}
 
-	return new_class;
+	for (var key in props) {
+		if (key === CTOR_NAME) {
+			continue;
+		}
+		ctor.prototype[key] = props[key];
+	}
+
+	return ctor;
 }
+
+module.exports = Class;

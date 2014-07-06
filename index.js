@@ -2,10 +2,6 @@
 
 var CTOR_NAME = 'initialize';
 
-var extend = function (argument) {
-	// body...
-}
-
 function Class(props, parent) {
 	var ctor = props[CTOR_NAME] || function () {};
 

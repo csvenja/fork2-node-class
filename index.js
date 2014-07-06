@@ -17,18 +17,23 @@ function Class(props, parent) {
 	// 	}
 	// }
 
-	if (parent) {
-		ctor.prototype.__proto__ = parent.prototype;
-	}
-	ctor.__super__ = parent || Object;
-	ctor.prototype.__super__ = parent || Object;
-
 	for (var key in props) {
 		if (key === CTOR_NAME) {
 			continue;
 		}
 		ctor.prototype[key] = props[key];
 	}
+
+	if (parent) {
+		ctor.prototype.__proto__ = parent.prototype;
+	}
+	ctor.__super__ = parent || Object;
+	ctor.prototype.__super__ = parent || Object;
+
+	ctor.prototype.super = function () {
+		var args = [].slice.call(arguments, 1);
+		return this.__super__.prototype[arguments[0]].apply(this, args);
+	};
 
 	return ctor;
 }

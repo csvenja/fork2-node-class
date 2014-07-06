@@ -21,6 +21,7 @@ function Class(props, parent) {
 		ctor.prototype.__proto__ = parent.prototype;
 	}
 	ctor.__super__ = parent || Object;
+	ctor.prototype.__super__ = parent || Object;
 
 	for (var key in props) {
 		if (key === CTOR_NAME) {
